@@ -1,0 +1,45 @@
+{
+  "Home": {
+    "headline": "Welcome to",
+    "description": "Manage your shopping lists easily and quickly.",
+    "button": {
+      "start": "Get Started",
+      "dashboard": "Go to Dashboard"
+    },
+    "footer": {
+      "rights": "All rights reserved."
+    }
+  },
+  "Header": {
+    "signIn": "Sign In",
+    "register": "Register",
+    "welcome": "Welcome, {email}",
+    "language": "Language",
+    "signOut": "Sign Out",
+    "profile": "Profile",
+    "dashboard": "Dashboard"
+  },
+  "SignIn": {
+    "title": "Sign In",
+    "email": "Email",
+    "password": "Password",
+    "button": "Sign In",
+    "google": "Sign in with Google",
+    "noAccount": "Don't have an account?",
+    "registerHere": "Register here",
+    "error": "Invalid email or password"
+  },
+  "Register": {
+    "title": "Create an Account",
+    "email": "Email",
+    "password": "Password",
+    "button": "Register",
+    "error": "Registration failed",
+    "haveAccount": "Already have an account?",
+    "signinHere": "Sign in here"
+  },
+  "Dashboard": {
+    "hello": "Hello",
+    "notSignedIn": "You are not signed in."
+  }
+}
