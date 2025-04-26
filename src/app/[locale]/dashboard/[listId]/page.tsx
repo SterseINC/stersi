@@ -7,6 +7,19 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import AddItemModal from '@/components/AddItemModal';
 
+interface ListItem {
+  id: string;
+  name: string;
+  quantity?: string;
+  bought: boolean;
+}
+interface ListType {
+  _id: string;
+  title: string;
+  description?: string;
+  items: ListItem[];
+}
+
 
 export default function ListDetailsPage() {
   const { data: session, status } = useSession();
@@ -14,8 +27,8 @@ export default function ListDetailsPage() {
   const { listId } = useParams() as { listId: string };
   const t = useTranslations('List');
 
-  const [list, setList] = useState<any>(null);
-  const [items, setItems] = useState<any[]>([]);
+  const [list, setList] = useState<ListType | null>(null);
+  const [items, setItems] = useState<ListItem[]>([]);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {

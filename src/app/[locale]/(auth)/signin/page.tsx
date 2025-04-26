@@ -75,7 +75,7 @@ export default function SignInPage() {
         </form>
 
         {providers &&
-          Object.values(providers).map((provider: any) =>
+          Object.values(providers as Record<string, ClientSafeProvider>).map((provider) =>
             provider.id === 'google' ? (
               <div key={provider.name} className="mt-4">
                 <button
