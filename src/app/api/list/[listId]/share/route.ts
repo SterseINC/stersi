@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import clientPromise from '@/lib/mongodb';
-import { ObjectId, WithId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 
 type ShoppingList = {
   userId: string;

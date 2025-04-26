@@ -7,8 +7,9 @@ if (!uri) {
   throw new Error("Please add your MONGODB_URI to .env.local");
 }
 
-// Extend the global object type safely
+// Extend global type for development (safely)
 declare global {
+  // eslint-disable-next-line no-var
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
