@@ -4,6 +4,16 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import clientPromise from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
+type ShoppingList = {
+  _id: ObjectId;
+  userId: string;
+  title: string;
+  description: string;
+  items: Array<any>; // (can improve later)
+  sharedWith?: string[];
+  createdAt: Date;
+};
+
 export async function POST(req: Request, { params }: { params: { listId: string } }) {
   const session = await getServerSession(authOptions);
 
@@ -15,7 +25,7 @@ export async function POST(req: Request, { params }: { params: { listId: string 
   const client = await clientPromise;
 
   const usersCollection = client.db().collection('users');
-  const shoppingListsCollection = client.db().collection('shopping_lists');
+  const shoppingListsCollection = client.db().collection<ShoppingList>('shopping_lists'); // ✅ HERE
 
   const userToShare = await usersCollection.findOne({ email });
 
@@ -39,10 +49,9 @@ export async function POST(req: Request, { params }: { params: { listId: string 
     return NextResponse.json({ message: 'User already shared' }, { status: 400 });
   }
 
-  // ✅ FIX: using "unknown" cast then UpdateFilter
   await shoppingListsCollection.updateOne(
     { _id: new ObjectId(params.listId) },
-    { $push: { sharedWith: { $each: [userToShare._id.toString()] } } } as unknown as import('mongodb').UpdateFilter<any>
+    { $push: { sharedWith: { $each: [userToShare._id.toString()] } } }
   );
 
   return NextResponse.json({ message: 'List shared successfully' });
