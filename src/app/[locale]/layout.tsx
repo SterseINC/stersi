@@ -25,13 +25,12 @@ export const metadata = {
 // ✅ Manual typing because Next.js doesn't provide LayoutProps
 type LocaleLayoutProps = {
   children: React.ReactNode;
-  params: {
+  params: Promise<{
     locale: string;
-  };
+  }>;
 };
-
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
-  const { locale } = params;
+  const { locale } = await params;
 
   if (!supportedLocales.includes(locale)) {
     notFound();
