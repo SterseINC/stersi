@@ -22,15 +22,15 @@ export const metadata = {
   description: 'Manage your shopping lists effortlessly.',
 };
 
-// ✅ Define clean props type
-type Props = {
+// 🛠 Correct Props type
+interface LocaleLayoutProps {
   children: React.ReactNode;
   params: {
     locale: string;
   };
-};
+}
 
-export default async function LocaleLayout({ children, params }: Props) {
+export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
   const { locale } = params;
 
   if (!supportedLocales.includes(locale)) {
