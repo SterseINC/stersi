@@ -22,13 +22,13 @@ export const metadata = {
   description: 'Manage your shopping lists effortlessly.',
 };
 
-// 🛠 Correct Props type
-interface LocaleLayoutProps {
+// ✅ Manual typing because Next.js doesn't provide LayoutProps
+type LocaleLayoutProps = {
   children: React.ReactNode;
   params: {
     locale: string;
   };
-}
+};
 
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
   const { locale } = params;
