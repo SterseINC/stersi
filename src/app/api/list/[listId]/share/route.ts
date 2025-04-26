@@ -2,19 +2,27 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import clientPromise from '@/lib/mongodb';
-import { ObjectId } from 'mongodb';
+import { ObjectId, WithId } from 'mongodb';
 
 type ShoppingList = {
-  _id: ObjectId;
   userId: string;
   title: string;
   description: string;
-  items: Array<any>; // (can improve later)
+  items: Array<{ name: string; quantity?: string; bought: boolean }>;
   sharedWith?: string[];
   createdAt: Date;
 };
 
-export async function POST(req: Request, { params }: { params: { listId: string } }) {
+type User = {
+  _id: ObjectId;
+  email: string;
+  hashedPassword?: string;
+};
+
+export async function POST(
+  req: Request,
+  { params }: { params: { listId: string } }
+) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -24,8 +32,8 @@ export async function POST(req: Request, { params }: { params: { listId: string 
   const { email }: { email: string } = await req.json();
   const client = await clientPromise;
 
-  const usersCollection = client.db().collection('users');
-  const shoppingListsCollection = client.db().collection<ShoppingList>('shopping_lists'); // ✅ HERE
+  const usersCollection = client.db().collection<User>('users');
+  const shoppingListsCollection = client.db().collection<ShoppingList>('shopping_lists');
 
   const userToShare = await usersCollection.findOne({ email });
 
@@ -51,7 +59,7 @@ export async function POST(req: Request, { params }: { params: { listId: string 
 
   await shoppingListsCollection.updateOne(
     { _id: new ObjectId(params.listId) },
-    { $push: { sharedWith: { $each: [userToShare._id.toString()] } } }
+    { $push: { sharedWith: userToShare._id.toString() } } // ✅ no $each needed
   );
 
   return NextResponse.json({ message: 'List shared successfully' });

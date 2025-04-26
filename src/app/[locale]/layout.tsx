@@ -3,8 +3,8 @@ import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import SessionWrapper from '@/components/SessionWrapper';
 import Header from '@/components/Header';
-import { getMessages } from '@/lib/getMessages';
 import Footer from '@/components/Footer';
+import { getMessages } from '@/lib/getMessages';
 import { Inter } from 'next/font/google';
 
 const inter = Inter({
@@ -29,9 +29,8 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  const { locale } = await params;
-  console.log('locale: ' + locale)
-  // Now inside an async function, it's safe!
+  const { locale } = params; // ✅ FIXED: no await here
+
   if (!supportedLocales.includes(locale)) {
     notFound();
   }
