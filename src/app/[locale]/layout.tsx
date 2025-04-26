@@ -4,6 +4,14 @@ import { notFound } from 'next/navigation';
 import SessionWrapper from '@/components/SessionWrapper';
 import Header from '@/components/Header';
 import { getMessages } from '@/lib/getMessages';
+import Footer from '@/components/Footer';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin', 'greek'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 const supportedLocales = ['en', 'el'];
 
@@ -35,12 +43,13 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={inter.variable}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <SessionWrapper>
             <Header />
             {children}
+            <Footer />
           </SessionWrapper>
         </NextIntlClientProvider>
       </body>

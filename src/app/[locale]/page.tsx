@@ -32,10 +32,6 @@ export default function HomePage() {
           {session ? t('button.dashboard') : t('button.start')}
         </button>
       </div>
-
-      <footer className="text-sm text-gray-500 mt-8">
-        &copy; {new Date().getFullYear()} Stersi. {t('footer.rights')}
-      </footer>
     </main>
   );
 }

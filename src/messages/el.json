@@ -41,7 +41,43 @@
   },
   "Dashboard": {
     "hello": "Γεια σου",
-    "notSignedIn": "Δεν είστε συνδεδεμένος."
+    "notSignedIn": "Δεν είστε συνδεδεμένος.",
+    "myLists": "Οι λίστες αγορών μου",
+    "createList": "Νέα λίστα",
+    "listTitle": "Τίτλος λίστας",
+    "listDescription": "Περιγραφή λίστας",
+    "create": "Δημιουργία",
+    "cancel": "Άκυρο",
+    "listTitlePlaceholder": "π.χ. Εβδομαδιαία αγορές",
+    "listDescriptionPlaceholder": "π.χ. Βασικά προϊόντα για την εβδομάδα",
+    "editList": "Επεξεργασία Λίστας",
+    "edit": "Επεξεργασία",
+    "save": "Αποθήκευση Αλλαγών",
+    "titleRequired": "Απαιτείται τίτλος.",
+    "viewList": "Προβολή Λίστας",
+    "delete": "Διαγραφή",
+    "deleteConfirm": "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή τη λίστα;",
+    "shareList": "Κοινή χρήση λίστας",
+    "share": "Κοινοποίηση",
+    "email": "Email Χρήστη",
+    "shareSuccess": "Η λίστα κοινοποιήθηκε επιτυχώς!",
+    "userNotFound": "Ο χρήστης δεν βρέθηκε."
+
+  },
+  "Footer": {
+    "rights": "Όλα τα δικαιώματα διατηρούνται."
+  },
+  "List": {
+    "listTitleDefault": "Λίστα αγορών",
+    "back": "Πίσω στις λίστες",
+    "addItem": "Προσθήκη νέου προϊόντος",
+    "itemName": "Όνομα προϊόντος",
+    "itemNamePlaceholder": "π.χ. Μήλα",
+    "quantity": "Ποσότητα (προαιρετικό)",
+    "quantityPlaceholder": "π.χ. 2 κιλά",
+    "create": "Δημιουργία",
+    "cancel": "Άκυρο"
   }
+
 
 }

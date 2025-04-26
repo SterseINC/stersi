@@ -32,6 +32,11 @@ export default function Header() {
     }
   };
 
+  const handleMenuClick = (href: string) => {
+    setMenuOpen(false); // ✅ Close the menu first
+    router.push(href);  // ✅ Then navigate
+  };
+
   return (
     <header className="w-full bg-white border-b shadow-sm sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -65,28 +70,31 @@ export default function Header() {
               >
                 {/* Simple SVG user icon */}
                 <svg width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="6" r="4" stroke="#1C274C" strokeWidth="1.5"/>
-                <path d="M15 20.6151C14.0907 20.8619 13.0736 21 12 21C8.13401 21 5 19.2091 5 17C5 14.7909 8.13401 13 12 13C15.866 13 19 14.7909 19 17C19 17.3453 18.9234 17.6804 18.7795 18" stroke="#1C274C" strokeWidth="1.5" strokeLinecap="round"/>
+                  <circle cx="12" cy="6" r="4" stroke="#1C274C" strokeWidth="1.5"/>
+                  <path d="M15 20.6151C14.0907 20.8619 13.0736 21 12 21C8.13401 21 5 19.2091 5 17C5 14.7909 8.13401 13 12 13C15.866 13 19 14.7909 19 17C19 17.3453 18.9234 17.6804 18.7795 18" stroke="#1C274C" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
               </button>
 
               {/* Mini dropdown menu */}
               {menuOpen && (
                 <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-md border z-50 cursor-pointer">
-                  <Link
-                    href={`/${locale}/profile`}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  <button
+                    onClick={() => handleMenuClick(`/${locale}/profile`)}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                   >
                     {t('profile', { defaultValue: 'Profile' })}
-                  </Link>
-                  <Link
-                    href={`/${locale}/dashboard`}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  </button>
+                  <button
+                    onClick={() => handleMenuClick(`/${locale}/dashboard`)}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                   >
                     {t('dashboard', { defaultValue: 'Dashboard' })}
-                  </Link>
+                  </button>
                   <button
-                    onClick={() => signOut({ callbackUrl: `/${locale}/signin` })}
+                    onClick={() => {
+                      setMenuOpen(false);
+                      signOut({ callbackUrl: `/${locale}/signin` });
+                    }}
                     className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
                   >
                     {t('signOut', { defaultValue: 'Sign Out' })}
