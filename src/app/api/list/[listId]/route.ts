@@ -2,13 +2,15 @@ import { NextResponse } from 'next/server';
 import { getShoppingListById } from '@/lib/models/ShoppingList';
 import clientPromise from '@/lib/mongodb';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/authOptions';
 import { ObjectId } from 'mongodb';
 
 // GET: Fetch single list
-export async function GET(req: Request, { params }: { params: { listId: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ listId: string }> }) {
+  const { listId } = await params; // 🛠 await params
+
   try {
-    const list = await getShoppingListById(params.listId);
+    const list = await getShoppingListById(listId);
 
     if (!list) {
       return NextResponse.json({ message: 'List not found' }, { status: 404 });
@@ -22,14 +24,14 @@ export async function GET(req: Request, { params }: { params: { listId: string }
 }
 
 // PATCH: Update list title and description
-export async function PATCH(req: Request, { params }: { params: { listId: string } }) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ listId: string }> }) {
+  const { listId } = await params; // 🛠 await params
   const session = await getServerSession(authOptions);
 
   if (!session) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
-  const { listId } = params;
   const { title, description } = await req.json();
 
   if (!title || title.trim() === '') {
@@ -57,15 +59,14 @@ export async function PATCH(req: Request, { params }: { params: { listId: string
   }
 }
 
-//DELETE: Delete List
-export async function DELETE(req: Request, { params }: { params: { listId: string } }) {
+// DELETE: Delete List
+export async function DELETE(req: Request, { params }: { params: Promise<{ listId: string }> }) {
+  const { listId } = await params; // 🛠 await params
   const session = await getServerSession(authOptions);
 
   if (!session) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
-
-  const { listId } = params;
 
   try {
     const client = await clientPromise;

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/authOptions';
 import clientPromise from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
@@ -21,8 +21,10 @@ type User = {
 
 export async function POST(
   req: Request,
-  { params }: { params: { listId: string } }
+  { params }: { params: Promise<{ listId: string }> } // 🛠 correct typing
 ) {
+  const { listId } = await params; // 🛠 await params here!
+
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -41,7 +43,7 @@ export async function POST(
     return NextResponse.json({ message: 'User not found' }, { status: 404 });
   }
 
-  const list = await shoppingListsCollection.findOne({ _id: new ObjectId(params.listId) });
+  const list = await shoppingListsCollection.findOne({ _id: new ObjectId(listId) });
 
   if (!list) {
     return NextResponse.json({ message: 'List not found' }, { status: 404 });
@@ -58,8 +60,8 @@ export async function POST(
   }
 
   await shoppingListsCollection.updateOne(
-    { _id: new ObjectId(params.listId) },
-    { $push: { sharedWith: userToShare._id.toString() } } // ✅ no $each needed
+    { _id: new ObjectId(listId) },
+    { $push: { sharedWith: userToShare._id.toString() } }
   );
 
   return NextResponse.json({ message: 'List shared successfully' });
